@@ -1,23 +1,17 @@
+//入口
 import React from "react";
 import ReactDOM from 'react-dom'
-import {Button} from "antd-mobile";
-import {HashRouter, Route, Router,Switch} from "react-router-dom"
-import {Provider} from "react-redux"
-import store from "./redux/store";
+import {HashRouter,Route,Switch} from "react-router-dom";
 import Register from "./containers/register/register";
-import Login from "./containers/login/login";
 import Main from "./containers/main/main";
-import './assets/css/index.less'
+import Login from "./containers/login/login";
 ReactDOM.render((
-    <Provider store={store}>
-        <HashRouter>
-            <Switch>
-                <Route path="/register" components={Register}></Route>
-                <Route path="/login" components={Login}></Route>
-                <Route components={Main}></Route>
-            </Switch>
-
-        </HashRouter>
-    </Provider>
-
-),document.getElementById('root'))
+    <HashRouter>
+        <Switch>
+        <Route path='/register' component={Register}></Route>
+        <Route path='/login' component={Login}></Route>
+        <Route component={Main}></Route>
+        </Switch>
+    </HashRouter>
+    )
+    ,document.getElementById('root'))
