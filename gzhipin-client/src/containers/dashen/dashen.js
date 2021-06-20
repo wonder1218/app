@@ -2,14 +2,14 @@ import React, {Component} from "react";
 import {connect} from "react-redux";
 
 
-class Message extends Component{
+class Dashen extends Component{
     render() {
         return(
-            <div>Message</div>
+            <div>Dashen</div>
         )
     }
 }
 export default connect(
     state=>({}),
     {}
-)(Message)
+)(Dashen)

@@ -1,4 +1,4 @@
-import {reqLogin,reqRegister,reqUpdateUser} from "../api";
+import {reqLogin,reqRegister,reqUpdateUser,reqUser} from "../api";
 import {AUTH_SUCCESS,ERROR_MSG,RECEIVE_USER,RESET_USER} from "./action-types";
 const authSuccess=(user)=>({
     type:AUTH_SUCCESS,data:user
@@ -9,7 +9,7 @@ const errorMsg=(msg)=>({
 const receiveUser=(user)=>({
     type:RECEIVE_USER,data:user
 })
-const resetUser=(msg)=>({
+export const resetUser=(msg)=>({
     type:RESET_USER,data:msg
 })
 //注册
@@ -68,6 +68,18 @@ export const updateUser=(user)=>{
             dispatch(receiveUser(result.data));
         }else {
             dispatch(resetUser(result.msg));
+        }
+    }
+}
+//获取用户
+export const getUser=()=>{
+    return async dispatch=>{
+        const response=await resetUser()
+        const result=response.data
+        if(result.code===0){
+            dispatch(receiveUser(result.data))
+        }else {
+            dispatch(resetUser(result.msg))
         }
     }
 }
