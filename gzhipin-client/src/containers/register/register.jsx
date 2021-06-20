@@ -1,11 +1,11 @@
 import React, {Component} from "react";
 import {NavBar,WingBlank,List,InputItem,WhiteSpace,Radio,Button} from "antd-mobile";
 import Logo from "../../components/logo/logo";
-
+import {connect} from "react-redux";
+import {register} from "../../redux/actions";
 import {Redirect} from "react-router-dom";
-
 const ListItem=List.Item;
-export default class Register extends Component{
+ class Register extends Component{
     state={
         username:'',
         password:'',
@@ -13,8 +13,7 @@ export default class Register extends Component{
         type:'laoban',
     }
     register=()=>{
-        console.log(this.state)
-       // this.props.register(this.state);
+       this.props.register(this.state);
     }
     handleChange=(name,val)=>{
         this.setState({
@@ -26,14 +25,18 @@ export default class Register extends Component{
     }
     render() {
         const {type}=this.state
+        const {msg,redirectTo}=this.props.user
+        if(redirectTo){
+            return <Redirect to={redirectTo}/>
+        }
         return(
             <div className="register">
-                <NavBar>
-                    <NavBar>硅&nbsp;谷&nbsp;直&nbsp;聘&nbsp;</NavBar>
+
+                    <NavBar>旭&nbsp;升&nbsp;直&nbsp;聘&nbsp;</NavBar>
                     <Logo/>
                     <WingBlank>
                         <List>
-
+                            {msg?<div className='error-msg'>{msg}</div>:null}
                             <WhiteSpace/>
                             <InputItem placeholder="请输入用户名" onChange={val=>{this.handleChange('username',val)}}>
                                 用户名:
@@ -55,15 +58,15 @@ export default class Register extends Component{
                             <Button onClick={this.toLogin}>已有账户</Button>
                         </List>
                     </WingBlank>
-                </NavBar>
+
             </div>
         )
     }
 
 }
-// export default connect(
-//     state=>({
-//         user:state.user
-//     }),
-//     {Register}
-// )(Register)
+export default connect(
+    state=>({
+        user:state.user
+    }),
+    {register}
+)(Register)

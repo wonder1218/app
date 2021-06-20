@@ -51,4 +51,24 @@ router.post('/login',function (req,res) {
     });
 
 });
+//更新用户信息的路由
+router.post('/update',function (req,res) {
+    const userid=req.cookies.userid
+    if(!userid ){
+      return   res.send({code: 1, msg: '请先登录'});
+    }
+    const user=req.body;
+    UserModel.findByIdAndUpdate({_id:userid},user,function (error,oldUser) {
+        if(!oldUser){
+            //通知浏览器删除cookies
+            res.clearCookie('userid')
+            res.send({code: 1, msg: '请先登录'});
+        }else {
+            const {_id,username,type}=oldUser
+            const data=Object.assign(user,{_id,username,type})
+
+            res.send({code:0,data});
+        }
+    })
+})
 module.exports = router;

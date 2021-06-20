@@ -1,18 +1,16 @@
 import React, {Component} from "react";
 import {NavBar,WingBlank,List,InputItem,WhiteSpace,Button} from "antd-mobile";
 import Logo from "../../components/logo/logo";
-
+import {connect} from "react-redux";
+import {login} from "../../redux/actions";
 import {Redirect} from "react-router-dom";
-
-const ListItem=List.Item;
-export default class Register extends Component{
+ class Login extends Component{
     state={
         username:'',
         password:'',
     }
     login=()=>{
-        console.log(this.state)
-        // this.props.register(this.state);
+        this.props.login(this.state);
     }
     handleChange=(name,val)=>{
         this.setState({
@@ -23,13 +21,19 @@ export default class Register extends Component{
         this.props.history.replace('/register')
     }
     render() {
+
+        const {msg,redirectTo}=this.props.user
+        if(redirectTo){
+            return <Redirect to={redirectTo}></Redirect>
+        }
         return(
             <div className="register">
-                <NavBar>
-                    <NavBar>硅&nbsp;谷&nbsp;直&nbsp;聘&nbsp;</NavBar>
+
+                    <NavBar>旭&nbsp;升&nbsp;直&nbsp;聘&nbsp;</NavBar>
                     <Logo/>
                     <WingBlank>
                         <List>
+                            {msg?<div className='error-msg'>{msg}</div>:null}
                             <WhiteSpace/>
                             <InputItem placeholder="请输入用户名" onChange={val=>{this.handleChange('username',val)}}>
                                 用户名:
@@ -44,9 +48,15 @@ export default class Register extends Component{
                             <Button onClick={this.toRegister}>还没有账户</Button>
                         </List>
                     </WingBlank>
-                </NavBar>
+
             </div>
         )
     }
 
 }
+export default connect(
+    state=>({
+        user:state.user
+    }),
+    {login}
+)(Login)
