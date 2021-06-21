@@ -25,7 +25,8 @@ class Personal extends React.Component{
         return(
             <div>
            <Result
-               img={<img src={require(`../../assets/images/${header}.png`)} style={{width:50}} alt='header'/>}
+
+               img={<img src={require(`../../assets/images/${header}.png`).default} style={{width:50}} alt='header'/>}
            title={usrname}
            message={company}
            />
