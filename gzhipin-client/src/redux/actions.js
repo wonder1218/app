@@ -1,5 +1,5 @@
-import {reqLogin,reqRegister,reqUpdateUser,reqUser} from "../api";
-import {AUTH_SUCCESS,ERROR_MSG,RECEIVE_USER,RESET_USER} from "./action-types";
+import {reqLogin, reqRegister, reqUpdateUser, reqUser, reqUserList} from "../api";
+import {AUTH_SUCCESS,ERROR_MSG,RECEIVE_USER,RESET_USER,RECEIVE_USER_LIST} from "./action-types";
 const authSuccess=(user)=>({
     type:AUTH_SUCCESS,data:user
 })
@@ -12,6 +12,8 @@ const receiveUser=(user)=>({
 export const resetUser=(msg)=>({
     type:RESET_USER,data:msg
 })
+//接收用户列表的同步action
+export const receiveUserList=(userList)=>({type:RECEIVE_USER_LIST,data:userList})
 //注册
 export const register=(user)=>{
     const {username,password,password2,type}=user
@@ -80,6 +82,16 @@ export const getUser=()=>{
             dispatch(receiveUser(result.data))
         }else {
             dispatch(resetUser(result.msg))
+        }
+    }
+}
+//获取用户列表的异步action
+export const getUserList=(type)=>{
+    return async dispatch=>{
+        const response=await reqUserList(type)
+        const result=response.data
+        if(result.code===0){
+            dispatch(receiveUserList(result.data));
         }
     }
 }

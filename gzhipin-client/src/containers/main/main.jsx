@@ -80,7 +80,7 @@ class Main extends Component{
         }
         return(
             <div>
-                {currentNav?<NavBar>{currentNav.title}</NavBar>:null}
+                {currentNav?<NavBar className='sticky-header'>{currentNav.title}</NavBar>:null}
                 <Switch>
                     {
                         navList.map(nav=> <Route path={nav.path} component={nav.component}></Route>)
@@ -96,6 +96,10 @@ class Main extends Component{
     }
 
 }
+
+
+
+
 export default connect(
     state=>({user:state.user}),
     {getUser}

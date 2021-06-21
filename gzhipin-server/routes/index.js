@@ -81,4 +81,11 @@ router.post('/user',function (req,res) {
         res.send({code:0,data:user});
     })
 })
+//获取用户的列表
+router.get('/userlist',function (req,res) {
+    const {type}=req.query;
+    UserModel.find({type},filter,function (error,users) {
+        res.send({code:0,data:users});
+    });
+});
 module.exports = router;
